@@ -7,7 +7,8 @@ namespace AntiVanDerWaerden
         static void Main(string[] args)
         {
             IStrategy strategy;
-
+            //Console.ForegroundColor = ConsoleColor.Red;
+            //Console.ForegroundColor = (ConsoleColor)0;
             Console.WriteLine("Anty-van der Waerden");
             Console.WriteLine();
             Console.WriteLine("Podaj dane wejściowe: n k c");
@@ -27,6 +28,9 @@ namespace AntiVanDerWaerden
                 Console.WriteLine();
 
                 strategy = new Strategy1(int.Parse(splittedData[0]), int.Parse(splittedData[1]), int.Parse(splittedData[2]), true);
+                strategy.Play();
+                Console.WriteLine("--------END--------");
+
             }
         }
     }
