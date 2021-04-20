@@ -6,5 +6,7 @@ namespace AntiVanDerWaerden
 {
     interface IStrategy
     {
+        public List<int[]> FindAllSubsequences();
+        public void Play();
     }
 }
