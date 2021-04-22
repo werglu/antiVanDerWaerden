@@ -1,4 +1,4 @@
-# antiVanDerWaerden
+# Anty-Van Der Waerden
 Gry kombinatoryczne - anti van der waerden problem. 
 
 Dane wejściowe: liczba naturalna n, liczba naturalna k, liczba dostępnych kolorów c.
