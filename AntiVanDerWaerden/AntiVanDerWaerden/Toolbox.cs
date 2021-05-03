@@ -7,17 +7,18 @@ namespace AntiVanDerWaerden
         public static List<int[]> FindAllSubsequences(int n, int k)
         {
             var subsequences = new List<int[]>();
-            int r = n; // różnica
-            for (int i = r; i > 0; i--)
+            var r = n; // różnica
+            for (var i = r; i > 0; i--)
             {
                 if (1 + (k - 1) * r <= n)
                 {
-                    int start = 1;
+                    var start = 1;
                     while (start + (k - 1) * r <= n)
                     {
                         var array = new int[k];
-                        for (int j = 0; j < k;j++)
+                        for (var j = 0; j < k;j++)
                             array[j] = start + j * r;
+                        
                         start++;
                         subsequences.Add(array);
                     }
