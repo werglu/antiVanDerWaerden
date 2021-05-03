@@ -28,8 +28,7 @@ namespace AntiVanDerWaerden
             subsequences = Toolbox.FindAllSubsequences(n, k);
             T = new int[subsequences.Count, c+1];
         }
-
-
+        
         public void Play()
         {
             DoFirstMovePlayer1();
@@ -63,8 +62,7 @@ namespace AntiVanDerWaerden
             
             Console.Write($"Gracz1 wybiera liczbę {number} i kolor ");
             Console.ForegroundColor = (ConsoleColor)1;
-            Console.Write("1");
-            Console.WriteLine();
+            Console.Write("1\n");
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -106,12 +104,8 @@ namespace AntiVanDerWaerden
             }
 
             for (var i = 0; i < T.GetLength(0); i++)
-            {
                 if (T[i, c] == maxElements)
-                {
                     bestIndexes.Add(i);
-                }
-            }
 
             maxIndex = random.Next(0, bestIndexes.Count);
             return bestIndexes.ElementAt(maxIndex);
@@ -211,9 +205,7 @@ namespace AntiVanDerWaerden
             for (var i = 0; i < n; i++)
             {
                 if (numbers[i] == 0)
-                {
                     Console.Write($"{i + 1} ");
-                }
                 else
                 {
                     Console.ForegroundColor = (ConsoleColor)numbers[i];
