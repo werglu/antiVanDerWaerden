@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace AntiVanDerWaerden
 {
@@ -53,12 +54,24 @@ namespace AntiVanDerWaerden
             var mode = Console.ReadLine();
             if (mode == "1" || mode == "demo" || mode == "1)")
             {
+                Console.WriteLine("Wybierz strategie");
+                Console.WriteLine("1)");
+                Console.WriteLine("2)");
+                var strategyReadLine = Console.ReadLine();
                 Console.WriteLine("--------START--------");
                 for (var i = 1; i <= n; i++)
                     Console.Write(i.ToString() + ' ');
                 Console.WriteLine();
-
-                var strategy = new Strategy1(n, k, c, true);
+                IStrategy strategy;
+                if(strategyReadLine == "1")
+                    strategy = new Strategy1(n, k, c, true);
+                else if (strategyReadLine == "2")
+                    strategy = new Strategy2(n, k, c, true);
+                else
+                {
+                    Console.WriteLine("Źle wybrana strategia");
+                    return;
+                }
                 strategy.Play();
                 Console.WriteLine("--------END--------");
 
