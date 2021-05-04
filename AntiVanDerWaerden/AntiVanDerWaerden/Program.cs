@@ -32,12 +32,12 @@ namespace AntiVanDerWaerden
                     Console.WriteLine("Nieprawidłowa wartość parametru n\n");
                     continue;
                 }
-                if (!int.TryParse(splittedData[0], out k) || k < 1)
+                if (!int.TryParse(splittedData[1], out k) || k < 1)
                 {
                     Console.WriteLine("Nieprawidłowa wartość parametru k\n");
                     continue;
                 }
-                if (!int.TryParse(splittedData[0], out c) || c < 1)
+                if (!int.TryParse(splittedData[2], out c) || c < 1)
                 {
                     Console.WriteLine("Nieprawidłowa wartość parametru c\n");
                     continue;
