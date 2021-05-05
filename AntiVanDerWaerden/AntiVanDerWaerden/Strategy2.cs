@@ -49,7 +49,7 @@ namespace AntiVanDerWaerden
         {
             if (demo)
             {
-                DisplayState();
+               // DisplayState();
             }
 
             while (finish == -1)
@@ -116,7 +116,7 @@ namespace AntiVanDerWaerden
 
         private void DisplayState()
         {
-            Console.WriteLine("Display state:");
+            //Console.WriteLine("Display state:");
             for (int i = 0; i < n; i++)
             {
                 if (numbers[i] == 0)

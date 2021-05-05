@@ -7,9 +7,7 @@ namespace AntiVanDerWaerden
     {
         private static void Main(string[] args)
         {
-            //Console.ForegroundColor = ConsoleColor.Red;
-            //Console.ForegroundColor = (ConsoleColor)0;
-            
+         
             Console.WriteLine("Anty-van der Waerden\n");
 
             int n;

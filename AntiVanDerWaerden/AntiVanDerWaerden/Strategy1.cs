@@ -161,6 +161,11 @@ namespace AntiVanDerWaerden
                 if (T[index, i] > 0)
                     colors.Add(i+1);
 
+            if (colors.Count == 0)
+            {
+                return 1;
+            }
+
             return colors.ElementAt(random.Next(0, colors.Count));
         }
 
