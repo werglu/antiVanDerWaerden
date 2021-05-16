@@ -46,6 +46,14 @@
     <Compile Include="IStrategy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\IPlayerStrategy.cs" />
+    <Compile Include="Strategies\Strategy1\Player1Strategy1.cs" />
+    <Compile Include="Strategies\Strategy1\Player1StrategyBase.cs" />
+    <Compile Include="Strategies\Strategy1\Player2Strategy1.cs" />
+    <Compile Include="Strategies\Strategy2\Player1Strategy2.cs" />
+    <Compile Include="Strategies\PlayerStrategyBase.cs" />
+    <Compile Include="Strategies\Strategy2\Player2Strategy2.cs" />
+    <Compile Include="Strategies\Strategy2\PlayerStrategy2Base.cs" />
     <Compile Include="Strategy1.cs" />
     <Compile Include="Strategy2.cs" />
     <Compile Include="Toolbox.cs" />

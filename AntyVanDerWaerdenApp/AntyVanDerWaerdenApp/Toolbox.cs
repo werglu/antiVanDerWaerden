@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace AntyVanDerWaerdenApp
 {
@@ -31,14 +27,6 @@ namespace AntyVanDerWaerdenApp
             }
 
             return subsequences;
-            //for (int i=0; i<subsequences.Count; i++)
-            //{
-            //    for (int j=0;j<k;j++)
-            //    {
-            //        Console.Write(subsequences.ElementAt(i)[j] + " ");
-            //    }
-            //    Console.WriteLine();
-            //}
         }
     }
 }
