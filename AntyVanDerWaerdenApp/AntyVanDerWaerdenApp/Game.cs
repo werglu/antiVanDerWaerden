@@ -39,8 +39,15 @@ namespace AntyVanDerWaerdenApp
             DisplayState();
             while (true)
             {
+                Console.Write("Ruch gracza 1. Naciśnij dowolny klawisz aby kontynuować...");
+                Console.ReadKey(true);
+                ConsoleExtension.ClearLine();
                 if (MakeMove(player1Strategy, 1, player2Strategy))
                     return;
+                
+                Console.Write("Ruch gracza 2. Naciśnij dowolny klawisz aby kontynuować...");
+                Console.ReadKey(true);
+                ConsoleExtension.ClearLine();
                 if (MakeMove(player2Strategy, 2, player1Strategy))
                     return;
             }
