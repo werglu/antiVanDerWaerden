@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AntyVanDerWaerdenApp.Strategies.Strategy1
@@ -17,30 +18,30 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
         public override (int number, int color) MakeMove(IReadOnlyList<int> numbers)
         {
             var maxColoredCount = T.Select(x => x[c]).Max();
-            var maxColoredCountSubsequenceIndex = T.Select((x, index) => (x, index)).First(x => x.x[c] == maxColoredCount).index;
+            var maxColoredCountSubsequenceIndexes = T.Select((x, index) => (x, index)).Where(x => x.x[c] == maxColoredCount).Select(x => x.index).ToList();
+            var maxColoredIndex = Random.Next(0, maxColoredCountSubsequenceIndexes.Count);
             
-            var (number, color) = GetMiddleElement(numbers, maxColoredCountSubsequenceIndex);
+            var (number, color) = GetFringeElement(numbers, maxColoredCountSubsequenceIndexes[maxColoredIndex]);
             
             Update(number, color);
             return (number, color);
         }
 
-        private (int number, int color) GetMiddleElement(IReadOnlyList<int> numbers, int subsequenceIndex)
+        private (int number, int color) GetFringeElement(IReadOnlyList<int> numbers, int subsequenceIndex)
         {
-            var middleIndex = k / 2;
+            var fringeIndex = k - 1;
             var color = GetRandomColor(subsequenceIndex);
+            if (color == -1)
+                return (-1, -1);
+            
             var subsequence = Subsequences[subsequenceIndex];
-
-            if (numbers[subsequence[middleIndex] - 1] == 0)
-                return (numbers[subsequence[middleIndex] - 1], color);
-
-            for (var i = 1; i < k - k / 2; i++)
+            for (var i = 0; i < k; i++)
             {
-                if (middleIndex - i >= 0 && numbers[subsequence[middleIndex - i] - 1] == 0)
-                    return (numbers[subsequence[middleIndex - i] - 1], color);
-                
-                if (middleIndex + i >= 0 && numbers[subsequence[middleIndex - i] + 1] == 0)
-                    return (numbers[subsequence[middleIndex + i] - 1], color);
+                if (i < k && numbers[subsequence[i] - 1] == 0)
+                    return (subsequence[i] - 1, color);
+
+                if (fringeIndex - i >= 0 && numbers[subsequence[fringeIndex - i] - 1] == 0)
+                    return (subsequence[fringeIndex - i] - 1, color);
             }
             
             // all numbers colored
@@ -53,7 +54,7 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
         /// <param name="subsequenceIndex">Index of a subsequence in which used colors will be searched.</param>
         private int GetRandomColor(int subsequenceIndex)
         {
-            var usedColors = T[subsequenceIndex].Where(x => x > 0).Select(x => x + 1).ToList();
+            var usedColors = T[subsequenceIndex].Reverse().Skip(1).Where(x => x > 0).ToList();
             return usedColors.Count == 0 ? 1 : usedColors[Random.Next(0, usedColors.Count)];
         }
     }

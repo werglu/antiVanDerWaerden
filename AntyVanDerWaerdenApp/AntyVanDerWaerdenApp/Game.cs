@@ -37,7 +37,8 @@ namespace AntyVanDerWaerdenApp
 
         public void PlayDemo()
         {
-            void MakeMove(Strategies.IStrategy playingStrategy, int playingPlayer, Strategies.IStrategy notPlayingStrategy)
+            // Returns boolean value indicating whether game has ended.
+            bool MakeMove(Strategies.IStrategy playingStrategy, int playingPlayer, Strategies.IStrategy notPlayingStrategy)
             {
                 var (number, color) = playingStrategy.MakeMove(numbers);
                 notPlayingStrategy.Update(number, color);
@@ -45,12 +46,7 @@ namespace AntyVanDerWaerdenApp
                 Update(number, color);
                 DisplayMove(playingPlayer, number, color);
                 DisplayState();
-            }
-            
-            DisplayState();
-            while (true)
-            {
-                MakeMove(player1Strategy, 1, player2Strategy);
+                
                 if (Player1Won())
                 {
                     Console.Write("Zwyciężył Gracz1! Znaleziono tęczowy podciąg ");
@@ -63,14 +59,24 @@ namespace AntyVanDerWaerdenApp
                     }
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine();
+                    return true;
                 }
-
-                MakeMove(player2Strategy, 2, player1Strategy);
                 if (Player2Won())
                 {
                     Console.Write("Zwyciężył Gracz2! Nie znaleziono tęczowego podciagu.");
-                    return;
+                    return true;
                 }
+
+                return false;
+            }
+            
+            DisplayState();
+            while (true)
+            {
+                if (MakeMove(player1Strategy, 1, player2Strategy))
+                    return;
+                if (MakeMove(player2Strategy, 2, player1Strategy))
+                    return;
             }
         }
 
@@ -84,7 +90,7 @@ namespace AntyVanDerWaerdenApp
             numbers[number] = color;
             for (var i = 0; i < subsequences.Count; i++)
             {
-                if (!subsequences[i].Contains(number))
+                if (!subsequences[i].Contains(number + 1))
                     continue;
                 
                 if (T[i][color - 1] == 1)
@@ -96,16 +102,14 @@ namespace AntyVanDerWaerdenApp
                 else
                 {
                     T[i][color - 1] = 1;
-
-                    if (T[i][c] > -1)
-                        T[i][c]++;
+                    T[i][c]++;
                 }
             }
         }
 
         private void DisplayMove(int player, int number, int color)
         {
-            Console.Write($"Gracz {player} wybiera liczbę {number} i kolor ");
+            Console.Write($"Gracz {player} wybiera liczbę {number + 1} i kolor ");
             Console.ForegroundColor = (ConsoleColor)color;
             Console.Write($"{color}\n");
             Console.ForegroundColor = ConsoleColor.White;

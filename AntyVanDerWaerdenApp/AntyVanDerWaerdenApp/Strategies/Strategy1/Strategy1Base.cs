@@ -10,7 +10,7 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
         
         protected Random Random { get; } = new Random();
         protected List<int[]> Subsequences { get; }
-        protected List<int[]> T { get; }
+        protected List<int[]> T { get; } = new List<int[]>();
         
         protected Strategy1Base(int n, int k, int c)
         {
@@ -27,7 +27,7 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
         {
             for (var i = 0; i < Subsequences.Count; i++)
             {
-                if (!Subsequences[i].Contains(number))
+                if (!Subsequences[i].Contains(number + 1))
                     continue;
                 
                 if (T[i][color - 1] == 1)
@@ -39,9 +39,7 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
                 else
                 {
                     T[i][color - 1] = 1;
-
-                    if (T[i][c] > -1)
-                        T[i][c]++;
+                    T[i][c]++;
                 }
             }
         }

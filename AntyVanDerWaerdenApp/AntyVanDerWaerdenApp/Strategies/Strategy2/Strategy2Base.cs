@@ -11,13 +11,17 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy2
         
         protected Random Random { get; } = new Random();
         protected List<int[]> Subsequences { get; }
-        protected List<int[]> T { get; }
+        protected List<int[]> T { get; } = new List<int[]>();
         protected int[] A { get; private set; }
         
         protected Strategy2Base(int n, int k, int c)
         {
             this.n = n;
             this.k = k;
+            
+            Subsequences = Toolbox.GetAllSubsequences(n, k);
+            for (var i = 0; i < Subsequences.Count; i++)
+                T.Add(new int[k + 1]);
         }
         
         public abstract (int number, int color) MakeMove(IReadOnlyList<int> numbers);
