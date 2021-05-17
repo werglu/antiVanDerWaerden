@@ -6,16 +6,27 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
 {
     public abstract class Strategy1Base : IStrategy
     {
+        private readonly int n;
+        private readonly int k;
         private readonly int c;
         
         protected Random Random { get; } = new Random();
-        protected List<int[]> Subsequences { get; }
+        protected List<int[]> Subsequences { get; private set; }
         protected List<int[]> T { get; } = new List<int[]>();
         
         protected Strategy1Base(int n, int k, int c)
         {
+            this.n = n;
+            this.k = k;
             this.c = c;
             
+            Subsequences = Toolbox.GetAllSubsequences(n, k);
+            for (var i = 0; i < Subsequences.Count; i++)
+                T.Add(new int[c + 1]);
+        }
+
+        public virtual void Reset()
+        {
             Subsequences = Toolbox.GetAllSubsequences(n, k);
             for (var i = 0; i < Subsequences.Count; i++)
                 T.Add(new int[c + 1]);

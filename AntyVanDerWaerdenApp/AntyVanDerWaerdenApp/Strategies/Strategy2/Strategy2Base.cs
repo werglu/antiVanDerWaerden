@@ -12,7 +12,7 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy2
         private readonly int c;
         
         protected Random Random { get; } = new Random();
-        protected List<int[]> Subsequences { get; }
+        protected List<int[]> Subsequences { get; private set; }
         protected List<int[]> T { get; } = new List<int[]>();
         protected int[] A { get; private set; }
         
@@ -27,7 +27,15 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy2
                 // T.Add(new int[k + 1]);
                 T.Add(new int[c + 1]);
         }
-        
+
+        public void Reset()
+        {
+            Subsequences = Toolbox.GetAllSubsequences(n, k);
+            for (var i = 0; i < Subsequences.Count; i++)
+                // T.Add(new int[k + 1]);
+                T.Add(new int[c + 1]);
+        }
+
         public abstract (int number, int color) MakeMove(IReadOnlyList<int> numbers);
 
         public void Update(int number, int color)

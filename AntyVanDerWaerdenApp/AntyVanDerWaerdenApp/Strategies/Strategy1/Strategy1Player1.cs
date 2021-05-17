@@ -33,6 +33,11 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
             return (number, color);
         }
 
+        public override void Reset()
+        {
+            firstMove = true;
+        }
+
         private (int number, int color) MakeFirstMove(IReadOnlyCollection<int> numbers) => ((int)Math.Ceiling(numbers.Count / 2.0), 1);
 
         private int[] GetBestSubsequence()

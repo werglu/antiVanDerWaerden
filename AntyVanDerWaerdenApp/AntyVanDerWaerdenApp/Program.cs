@@ -161,7 +161,20 @@ namespace AntyVanDerWaerdenApp
                     game.PlayDemo();
                     break;
                 case Mode.Test:
-                    game.PlayTest();
+                    int testCount;
+                    while (true)
+                    {
+                        Console.WriteLine("Podaj liczbę testów:");
+                        var line = Console.ReadLine();
+                        if (!int.TryParse(line, out testCount) || testCount <= 0)
+                        {
+                            Console.WriteLine("Nieprawidłowa liczba testów");
+                            continue;
+                        }
+
+                        break;
+                    }
+                    game.PlayTest(testCount);
                     break;
             }
         }

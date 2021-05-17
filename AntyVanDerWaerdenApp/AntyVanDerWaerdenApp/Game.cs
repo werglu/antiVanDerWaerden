@@ -17,6 +17,13 @@ namespace AntyVanDerWaerdenApp
         private readonly List<int[]> subsequences;
         private readonly List<int[]> T;
 
+        private enum MakeMoveResult
+        {
+            NoOneWon,
+            Player1Won,
+            Player2Won
+        };
+
         public Game(int n, int k, int c, Strategies.IStrategy player1Strategy, Strategies.IStrategy player2Strategy)
         {
             this.n = n;
@@ -42,26 +49,54 @@ namespace AntyVanDerWaerdenApp
                 Console.Write("Ruch gracza 1. Naciśnij dowolny klawisz aby kontynuować...");
                 Console.ReadKey(true);
                 ConsoleExtension.ClearLine();
-                if (MakeMove(player1Strategy, 1, player2Strategy))
+                if (MakeMove(player1Strategy, 1, player2Strategy, true) != MakeMoveResult.NoOneWon)
                     return;
                 
                 Console.Write("Ruch gracza 2. Naciśnij dowolny klawisz aby kontynuować...");
                 Console.ReadKey(true);
                 ConsoleExtension.ClearLine();
-                if (MakeMove(player2Strategy, 2, player1Strategy))
+                if (MakeMove(player2Strategy, 2, player1Strategy, true) != MakeMoveResult.NoOneWon)
                     return;
             }
         }
 
-        public void PlayTest()
+        public void PlayTest(int testCount)
         {
-            throw new NotImplementedException();
+            var player1WinCount = 0;
+            var player2WinCount = 0;
+            
+            for (var i = 0; i < testCount; i++)
+            {
+                while (true)
+                {
+                    switch (MakeMove(player1Strategy, 1, player2Strategy, false))
+                    {
+                        case MakeMoveResult.Player1Won:
+                            player1WinCount++;
+                            break;
+                        case MakeMoveResult.Player2Won:
+                            player2WinCount++;
+                            break;
+                    }
+
+                    switch (MakeMove(player2Strategy, 2, player1Strategy, false))
+                    {
+                        case MakeMoveResult.Player1Won:
+                            player1WinCount++;
+                            break;
+                        case MakeMoveResult.Player2Won:
+                            player2WinCount++;
+                            break;
+                    }
+                }
+            }
+
+            Console.WriteLine($"Wykonano {testCount} gier.");
+            Console.WriteLine($"Gracz 1 wygrał {player1WinCount} razy ({(double)player1WinCount / testCount}% wszystkich gier).");
+            Console.WriteLine($"Gracz 2 wygrał {player2WinCount} razy ({(double)player2WinCount / testCount}% wszystkich gier).");
         }
         
-        /// <summary>
-        /// Returns boolean value indicating whether game has ended.
-        /// </summary>
-        private bool MakeMove(Strategies.IStrategy playingStrategy, int playingPlayer, Strategies.IStrategy notPlayingStrategy)
+        private MakeMoveResult MakeMove(Strategies.IStrategy playingStrategy, int playingPlayer, Strategies.IStrategy notPlayingStrategy, bool demo)
         {
             var (number, color) = playingStrategy.MakeMove(numbers);
             if (numbers[number] != 0)
@@ -70,30 +105,40 @@ namespace AntyVanDerWaerdenApp
             notPlayingStrategy.Update(number, color);
                 
             Update(number, color);
-            DisplayMove(playingPlayer, number, color);
-            DisplayState();
+            
+            if (demo)
+            {
+                DisplayMove(playingPlayer, number, color);
+                DisplayState();
+            }
                 
             if (Player1Won())
             {
-                Console.Write("Zwyciężył Gracz1! Znaleziono tęczowy podciąg ");
-                    
-                var subsequence = subsequences[T.Select((x, index) => (x, index)).First(x => x.x[c] == k).index];
-                foreach (var element in subsequence)
+                if (demo)
                 {
-                    Console.ForegroundColor = (ConsoleColor)numbers[element - 1];
-                    Console.Write($"{element} ");
+                    Console.Write("Zwyciężył Gracz1! Znaleziono tęczowy podciąg ");
+
+                    var subsequence = subsequences[T.Select((x, index) => (x, index)).First(x => x.x[c] == k).index];
+                    foreach (var element in subsequence)
+                    {
+                        Console.ForegroundColor = (ConsoleColor)numbers[element - 1];
+                        Console.Write($"{element} ");
+                    }
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
                 }
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine();
-                return true;
+
+                return MakeMoveResult.Player1Won;
             }
             if (Player2Won())
             {
-                Console.Write("Zwyciężył Gracz2! Nie znaleziono tęczowego podciagu.");
-                return true;
+                if (demo)
+                    Console.Write("Zwyciężył Gracz2! Nie znaleziono tęczowego podciagu.");
+                
+                return MakeMoveResult.Player2Won;
             }
 
-            return false;
+            return MakeMoveResult.NoOneWon;
         }
 
         private void Update(int number, int color)
