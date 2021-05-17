@@ -54,8 +54,8 @@ namespace AntyVanDerWaerdenApp
                 break;
             }
             
-            IPlayerStrategy player1Strategy;
-            IPlayerStrategy player2Strategy;
+            Strategies.IStrategy player1Strategy;
+            Strategies.IStrategy player2Strategy;
             
             // choosing player 1 strategy
             while (true)
@@ -70,13 +70,13 @@ namespace AntyVanDerWaerdenApp
                     // first strategy
                     case "1":
                     case "1)":
-                        player1Strategy = new Player1Strategy1(n, k, c, true);
+                        player1Strategy = new Strategy1Player1(n, k, c);
                         break;
                     
                     // second strategy
                     case "2":
                     case "2)":
-                        player1Strategy = new Player1Strategy2(n, k, c, true);
+                        player1Strategy = new Strategy2Player1(n, k, c);
                         break;
                     
                     // invalid input
@@ -101,13 +101,13 @@ namespace AntyVanDerWaerdenApp
                     // first strategy
                     case "1":
                     case "1)":
-                        player2Strategy = new Player2Strategy1(n, k, c, true);
+                        player2Strategy = new Strategy1Player2(n, k, c);
                         break;
                     
                     // second strategy
                     case "2":
                     case "2)":
-                        player2Strategy = new Player2Strategy2(n, k, c, true);
+                        player2Strategy = new Strategy2Player2(n, k, c);
                         break;
                     
                     // invalid input
@@ -154,25 +154,16 @@ namespace AntyVanDerWaerdenApp
                 break;
             }
 
+            var game = new Game(n, k, c, player1Strategy, player2Strategy);
             switch (mode)
             {
                 case Mode.Demo:
-                    PlayDemoMode(player1Strategy, player2Strategy);
+                    game.PlayDemo();
                     break;
                 case Mode.Test:
-                    PlayTestMode(player1Strategy, player2Strategy);
+                    game.PlayTest();
                     break;
             }
-        }
-
-        private static void PlayDemoMode(IPlayerStrategy player1Strategy, IPlayerStrategy player2Strategy)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void PlayTestMode(IPlayerStrategy player1Strategy, IPlayerStrategy player2Strategy)
-        {
-            throw new NotImplementedException();
         }
     }
 }

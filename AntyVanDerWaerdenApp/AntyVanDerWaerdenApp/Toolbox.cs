@@ -4,7 +4,7 @@ namespace AntyVanDerWaerdenApp
 {
     public static class Toolbox
     {
-        public static List<int[]> FindAllSubsequences(int n, int k)
+        public static List<int[]> GetAllSubsequences(int n, int k)
         {
             var subsequences = new List<int[]>();
             var r = n; // różnica

@@ -27,7 +27,7 @@ namespace AntyVanDerWaerdenApp
             this.demo = demo;
             numbers = new int[n];
 
-            subsequences = Toolbox.FindAllSubsequences(n, k);
+            subsequences = Toolbox.GetAllSubsequences(n, k);
             T = new int[subsequences.Count, c + 1];
         }
 
