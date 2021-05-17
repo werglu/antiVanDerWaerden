@@ -1,5 +1,4 @@
-﻿using AntyVanDerWaerdenApp.Strategies;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,39 +36,6 @@ namespace AntyVanDerWaerdenApp
 
         public void PlayDemo()
         {
-            // Returns boolean value indicating whether game has ended.
-            bool MakeMove(Strategies.IStrategy playingStrategy, int playingPlayer, Strategies.IStrategy notPlayingStrategy)
-            {
-                var (number, color) = playingStrategy.MakeMove(numbers);
-                notPlayingStrategy.Update(number, color);
-                
-                Update(number, color);
-                DisplayMove(playingPlayer, number, color);
-                DisplayState();
-                
-                if (Player1Won())
-                {
-                    Console.Write("Zwyciężył Gracz1! Znaleziono tęczowy podciąg ");
-                    
-                    var subsequence = subsequences[T.Select((x, index) => (x, index)).First(x => x.x[c] == k).index];
-                    foreach (var element in subsequence)
-                    {
-                        Console.ForegroundColor = (ConsoleColor)numbers[element - 1];
-                        Console.Write($"{element} ");
-                    }
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine();
-                    return true;
-                }
-                if (Player2Won())
-                {
-                    Console.Write("Zwyciężył Gracz2! Nie znaleziono tęczowego podciagu.");
-                    return true;
-                }
-
-                return false;
-            }
-            
             DisplayState();
             while (true)
             {
@@ -83,6 +49,44 @@ namespace AntyVanDerWaerdenApp
         public void PlayTest()
         {
             throw new NotImplementedException();
+        }
+        
+        /// <summary>
+        /// Returns boolean value indicating whether game has ended.
+        /// </summary>
+        private bool MakeMove(Strategies.IStrategy playingStrategy, int playingPlayer, Strategies.IStrategy notPlayingStrategy)
+        {
+            var (number, color) = playingStrategy.MakeMove(numbers);
+            if (numbers[number] != 0)
+                throw new InvalidOperationException($"Tried to recolor number {number} from color {numbers[number]} to color {color}.");
+            
+            notPlayingStrategy.Update(number, color);
+                
+            Update(number, color);
+            DisplayMove(playingPlayer, number, color);
+            DisplayState();
+                
+            if (Player1Won())
+            {
+                Console.Write("Zwyciężył Gracz1! Znaleziono tęczowy podciąg ");
+                    
+                var subsequence = subsequences[T.Select((x, index) => (x, index)).First(x => x.x[c] == k).index];
+                foreach (var element in subsequence)
+                {
+                    Console.ForegroundColor = (ConsoleColor)numbers[element - 1];
+                    Console.Write($"{element} ");
+                }
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine();
+                return true;
+            }
+            if (Player2Won())
+            {
+                Console.Write("Zwyciężył Gracz2! Nie znaleziono tęczowego podciagu.");
+                return true;
+            }
+
+            return false;
         }
 
         private void Update(int number, int color)
