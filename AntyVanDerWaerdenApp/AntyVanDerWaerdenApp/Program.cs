@@ -54,8 +54,8 @@ namespace AntyVanDerWaerdenApp
                 break;
             }
             
-            Strategies.IStrategy player1Strategy;
-            Strategies.IStrategy player2Strategy;
+            IStrategy player1Strategy;
+            IStrategy player2Strategy;
             
             // choosing player 1 strategy
             while (true)
