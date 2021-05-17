@@ -13,9 +13,9 @@ namespace AntyVanDerWaerdenApp
         private readonly Strategies.IStrategy player1Strategy;
         private readonly Strategies.IStrategy player2Strategy;
 
-        private readonly int[] numbers;
-        private readonly List<int[]> subsequences;
-        private readonly List<int[]> T;
+        private  int[] numbers;
+        private  List<int[]> subsequences;
+        private  List<int[]> T;
 
         private enum MakeMoveResult
         {
@@ -67,33 +67,56 @@ namespace AntyVanDerWaerdenApp
             
             for (var i = 0; i < testCount; i++)
             {
+                var broke = false;
                 while (true)
                 {
                     switch (MakeMove(player1Strategy, 1, player2Strategy, false))
                     {
                         case MakeMoveResult.Player1Won:
                             player1WinCount++;
+                            broke = true;
                             break;
                         case MakeMoveResult.Player2Won:
                             player2WinCount++;
+                            broke = true;
                             break;
                     }
+                    if (broke)
+                        break;
 
                     switch (MakeMove(player2Strategy, 2, player1Strategy, false))
                     {
                         case MakeMoveResult.Player1Won:
                             player1WinCount++;
+                            broke = true;
                             break;
                         case MakeMoveResult.Player2Won:
                             player2WinCount++;
+                            broke = true;
                             break;
                     }
+                    if (broke)
+                        break;
                 }
+                
+                Reset();
+                player1Strategy.Reset();
+                player2Strategy.Reset();
             }
 
             Console.WriteLine($"Wykonano {testCount} gier.");
-            Console.WriteLine($"Gracz 1 wygrał {player1WinCount} razy ({(double)player1WinCount / testCount}% wszystkich gier).");
-            Console.WriteLine($"Gracz 2 wygrał {player2WinCount} razy ({(double)player2WinCount / testCount}% wszystkich gier).");
+            Console.WriteLine($"Gracz 1 wygrał {player1WinCount} razy ({(double)player1WinCount / testCount * 100}% wszystkich gier).");
+            Console.WriteLine($"Gracz 2 wygrał {player2WinCount} razy ({(double)player2WinCount / testCount * 100}% wszystkich gier).");
+        }
+
+        private void Reset()
+        {
+            numbers = new int[n];
+            subsequences = Toolbox.GetAllSubsequences(n, k);
+
+            T = new List<int[]>();
+            for (var i = 0; i < subsequences.Count; i++)
+                T.Add(new int[c + 1]);
         }
         
         private MakeMoveResult MakeMove(Strategies.IStrategy playingStrategy, int playingPlayer, Strategies.IStrategy notPlayingStrategy, bool demo)

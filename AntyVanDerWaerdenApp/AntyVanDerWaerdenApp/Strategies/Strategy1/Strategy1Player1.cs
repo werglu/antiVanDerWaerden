@@ -35,6 +35,7 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
 
         public override void Reset()
         {
+            ResetBase();
             firstMove = true;
         }
 
@@ -52,7 +53,7 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
         private (int number, int color) GetMiddleElement(IReadOnlyList<int> numbers, IReadOnlyList<int> subsequence)
         {
             var middleIndex = k / 2;
-            var color = GetUnusedColor(numbers);
+            var color = GetUnusedColor(numbers, subsequence);
 
             if (numbers[subsequence[middleIndex] - 1] == 0)
                 return (subsequence[middleIndex] - 1, color);
@@ -70,12 +71,12 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
             return (-1, -1);
         }
 
-        private int GetUnusedColor(IEnumerable<int> numbers)
+        private int GetUnusedColor(IReadOnlyList<int> numbers, IReadOnlyList<int> subsequence)
         {
             var isUsed = new bool[c];
-            foreach (var number in numbers)
-                if (number > 0)
-                    isUsed[number - 1] = true;
+            foreach (var number in subsequence)
+                if (numbers[number - 1] > 0)
+                    isUsed[numbers[number - 1] - 1] = true;
 
             for (var i = 0; i < c; i++)
                 if (!isUsed[i])

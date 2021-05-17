@@ -27,9 +27,7 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
 
         public virtual void Reset()
         {
-            Subsequences = Toolbox.GetAllSubsequences(n, k);
-            for (var i = 0; i < Subsequences.Count; i++)
-                T.Add(new int[c + 1]);
+            ResetBase();
         }
 
         public abstract (int number, int color) MakeMove(IReadOnlyList<int> numbers);
@@ -53,6 +51,13 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
                     T[i][c]++;
                 }
             }
+        }
+
+        protected void ResetBase()
+        {
+            Subsequences = Toolbox.GetAllSubsequences(n, k);
+            for (var i = 0; i < Subsequences.Count; i++)
+                T.Add(new int[c + 1]);
         }
     }
 }
