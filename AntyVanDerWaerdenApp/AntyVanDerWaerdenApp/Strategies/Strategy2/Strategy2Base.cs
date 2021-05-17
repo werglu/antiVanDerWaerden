@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace AntyVanDerWaerdenApp.Strategies.Strategy2
 {
@@ -13,7 +12,7 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy2
         
         protected Random Random { get; } = new Random();
         protected List<int[]> Subsequences { get; private set; }
-        protected List<int[]> T { get; } = new List<int[]>();
+        protected List<int[]> T { get; private set; }
         protected int[] A { get; private set; }
         
         protected Strategy2Base(int n, int k, int c)
@@ -23,6 +22,8 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy2
             this.c = c;
             
             Subsequences = Toolbox.GetAllSubsequences(n, k);
+            
+            T = new List<int[]>();
             for (var i = 0; i < Subsequences.Count; i++)
                 // T.Add(new int[k + 1]);
                 T.Add(new int[c + 1]);
@@ -31,6 +32,8 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy2
         public void Reset()
         {
             Subsequences = Toolbox.GetAllSubsequences(n, k);
+
+            T = new List<int[]>();
             for (var i = 0; i < Subsequences.Count; i++)
                 // T.Add(new int[k + 1]);
                 T.Add(new int[c + 1]);

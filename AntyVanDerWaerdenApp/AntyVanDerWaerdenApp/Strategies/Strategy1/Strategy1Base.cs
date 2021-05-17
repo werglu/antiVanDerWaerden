@@ -12,7 +12,7 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
         
         protected Random Random { get; } = new Random();
         protected List<int[]> Subsequences { get; private set; }
-        protected List<int[]> T { get; } = new List<int[]>();
+        protected List<int[]> T { get; private set; }
         
         protected Strategy1Base(int n, int k, int c)
         {
@@ -21,6 +21,8 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
             this.c = c;
             
             Subsequences = Toolbox.GetAllSubsequences(n, k);
+
+            T = new List<int[]>();
             for (var i = 0; i < Subsequences.Count; i++)
                 T.Add(new int[c + 1]);
         }
@@ -56,6 +58,8 @@ namespace AntyVanDerWaerdenApp.Strategies.Strategy1
         protected void ResetBase()
         {
             Subsequences = Toolbox.GetAllSubsequences(n, k);
+            
+            T = new List<int[]>();
             for (var i = 0; i < Subsequences.Count; i++)
                 T.Add(new int[c + 1]);
         }
