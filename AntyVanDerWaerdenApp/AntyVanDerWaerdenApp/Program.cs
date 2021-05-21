@@ -177,6 +177,7 @@ namespace AntyVanDerWaerdenApp
                     game.PlayTest(testCount);
                     break;
             }
+            Console.ReadKey();
         }
     }
 }
