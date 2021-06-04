@@ -145,6 +145,10 @@ namespace AntyVanDerWaerdenApp
                     foreach (var element in subsequence)
                     {
                         Console.ForegroundColor = (ConsoleColor)numbers[element - 1];
+                        if ((ConsoleColor)numbers[element-1]==ConsoleColor.DarkMagenta)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                        }
                         Console.Write($"{element} ");
                     }
                     Console.ForegroundColor = ConsoleColor.White;
@@ -190,6 +194,10 @@ namespace AntyVanDerWaerdenApp
         {
             Console.Write($"Gracz {player} wybiera liczbę {number + 1} i kolor ");
             Console.ForegroundColor = (ConsoleColor)color;
+            if ((ConsoleColor)color == ConsoleColor.DarkMagenta)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+            }
             Console.Write($"{color}\n");
             Console.ForegroundColor = ConsoleColor.White;
         }
@@ -203,6 +211,10 @@ namespace AntyVanDerWaerdenApp
                 else
                 {
                     Console.ForegroundColor = (ConsoleColor)numbers[i];
+                    if ((ConsoleColor)numbers[i] == ConsoleColor.DarkMagenta)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    }
                     Console.Write($"{i + 1} ");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
